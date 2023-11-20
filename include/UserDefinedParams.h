@@ -9,7 +9,7 @@ struct Point {
     float x, y, z, intensity;
 };
 
-struct CuboidParams
+struct PCDSolidParams
 {
     int length = 10;
     int width = 10;
