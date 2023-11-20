@@ -5,7 +5,7 @@
 #include "UserDefinedParams.h"
 
 
-void tranform_pcd_and_save(TransformParams& transform_params)
+void transform_pcd_and_save(TransformParams& transform_params)
 {
     std::cout << "Hello, from Tranform Pcd and Save\n";
 

@@ -40,5 +40,14 @@ struct ConcatenatePCDParams : FileInputOutputParams {
     std::string input_filename_2;
 };
 
+struct ROIParams {
+    float x_min;
+    float x_max;
+    float y_min;
+    float y_max;
+    float z_min;
+    float z_max;
+};
+
 
 #endif // USER_DEFINED_PARAMS_H
