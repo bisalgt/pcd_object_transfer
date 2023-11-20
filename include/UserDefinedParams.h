@@ -25,4 +25,15 @@ struct FileInputOutputParams
 };
 
 
+struct TransformParams : FileInputOutputParams {
+    float x_translate = 0;
+    float y_translate = 0;
+    float z_translate = 0;
+    // angle of rotation in radians
+    float x_rotation = 0;
+    float y_rotation = 0;
+    float z_rotation = 0;
+};
+
+
 #endif // USER_DEFINED_PARAMS_H

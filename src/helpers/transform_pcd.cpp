@@ -5,22 +5,30 @@
 #include "UserDefinedParams.h"
 
 
-void tranform_pcd_and_save(FileInputOutputParams& file_input_output_transform_params)
+void tranform_pcd_and_save(TransformParams& transform_params)
 {
     std::cout << "Hello, from Tranform Pcd and Save\n";
 
-    file_input_output_transform_params.output_filename = file_input_output_transform_params.input_filename.substr(0, file_input_output_transform_params.input_filename.size()-4) + "_transformed.pcd";
+    // Loading the pointcloud
+    transform_params.output_filename = transform_params.input_filename.substr(0, transform_params.input_filename.size()-4) + "_transformed.pcd";
     pcl::PointCloud<pcl::PointXYZI>::Ptr source_cloud (new pcl::PointCloud<pcl::PointXYZI>);
-    pcl::io::loadPCDFile<pcl::PointXYZI>(file_input_output_transform_params.input_filename, *source_cloud);
+    pcl::io::loadPCDFile<pcl::PointXYZI>(transform_params.input_filename, *source_cloud);
 
-    float theta = 0; // The angle of rotation in radians
+    // Defining a rotation matrix and translation vector
     Eigen::Affine3f transform = Eigen::Affine3f::Identity();
-    transform.translation() << -5.0, 0.0, -5.0;
-    transform.rotate (Eigen::AngleAxisf (theta, Eigen::Vector3f::UnitZ())); // Rotate about z axis
+    // Translating the pointcloud
+    transform.translation() << transform_params.x_translate, transform_params.y_translate, transform_params.z_translate;
+    
+    // Rotating the PointCloud
+    transform.rotate (Eigen::AngleAxisf (transform_params.x_rotation, Eigen::Vector3f::UnitX())); // Rotate about x axis
+    transform.rotate (Eigen::AngleAxisf (transform_params.y_rotation, Eigen::Vector3f::UnitY())); // Rotate about y axis
+    transform.rotate (Eigen::AngleAxisf (transform_params.z_rotation, Eigen::Vector3f::UnitZ())); // Rotate about z axis
+    
+    // Executing the transformation
     pcl::PointCloud<pcl::PointXYZI>::Ptr transformed_cloud (new pcl::PointCloud<pcl::PointXYZI> ());
     pcl::transformPointCloud (*source_cloud, *transformed_cloud, transform);
 
-
-    pcl::io::savePCDFileASCII(file_input_output_transform_params.output_filename, *transformed_cloud); //Saving the transformed cloud
-    std::cout << "Saved " << transformed_cloud->size() << " data points to "<< file_input_output_transform_params.output_filename << std::endl;
+    // Saving transformed cloud
+    pcl::io::savePCDFileASCII(transform_params.output_filename, *transformed_cloud); //Saving the transformed cloud
+    std::cout << "Saved " << transformed_cloud->size() << " data points to "<< transform_params.output_filename << std::endl;
 }
