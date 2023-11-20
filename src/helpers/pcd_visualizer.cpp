@@ -8,6 +8,7 @@
 
 void pcd_visualizer(const std::string& filename)
 {
+    std::cout << "Running PCD Visualizer....\n";
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
     pcl::io::loadPCDFile<pcl::PointXYZI>(filename, *cloud);
 

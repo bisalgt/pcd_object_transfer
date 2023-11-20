@@ -2,12 +2,12 @@
 #include <pcl/point_types.h>
 #include <fstream>
 
-struct Point {
-    float x, y, z, intensity;
-};
+#include "UserDefinedParams.h"
 
-void read_and_write_to_pcd(const std::string& input_filename, const std::string& output_filename) {
-    std::ifstream file(input_filename, std::ios::binary);
+
+
+void read_and_write_to_pcd(FileInputOutputParams& file_bin_to_pcd_params) {
+    std::ifstream file(file_bin_to_pcd_params.input_filename, std::ios::binary);
     if (!file) {
         std::cerr << "Could not open input file\n";
         return;
@@ -29,10 +29,12 @@ void read_and_write_to_pcd(const std::string& input_filename, const std::string&
     cloud.height = 1;
     cloud.is_dense = false;
 
-    if (pcl::io::savePCDFileASCII(output_filename, cloud) == -1) {
+    file_bin_to_pcd_params.output_filename = file_bin_to_pcd_params.input_filename.substr(0, file_bin_to_pcd_params.input_filename.size()-4) + ".pcd";
+
+    if (pcl::io::savePCDFileASCII(file_bin_to_pcd_params.output_filename, cloud) == -1) {
         std::cerr << "Could not write output file\n";
         return;
     }
 
-    std::cerr << "Saved " << cloud.size() << " data points to "<< output_filename << std::endl;
+    std::cerr << "Saved " << cloud.size() << " data points to "<< file_bin_to_pcd_params.output_filename << std::endl;
 }
