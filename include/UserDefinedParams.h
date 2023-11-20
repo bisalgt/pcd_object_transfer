@@ -36,4 +36,9 @@ struct TransformParams : FileInputOutputParams {
 };
 
 
+struct ConcatenatePCDParams : FileInputOutputParams {
+    std::string input_filename_2;
+};
+
+
 #endif // USER_DEFINED_PARAMS_H

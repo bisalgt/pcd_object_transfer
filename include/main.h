@@ -15,4 +15,6 @@ void create_plane_pcd(const PCDSolidParams& pcd_solid_params);
 
 void tranform_pcd_and_save(TransformParams& transform_params);
 
+void concatenate_two_pcds(const ConcatenatePCDParams& concatenate_two_pcds_params);
+
 #endif // MAIN_H
