@@ -14,6 +14,7 @@ namespace PCD_OBJ_TRANSFER_CONSTANTS {
     const std::string PCD_CONCAT_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/concatenated_cuboid_and_plane.pcd";
     const std::string PCD_SPIKED_PLANE_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/spiked_plane_100by100.pcd";
     const std::string PCD_CONCAT_WITH_SPIKED_PLANE_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/concatenated_cuboid_and_spiked_plane.pcd";
+    const std::string PCD_INCLINED_PLANE_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/inclined_plane_100by100.pcd";
 }
 
 

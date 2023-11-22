@@ -13,6 +13,7 @@ void pcd_visualizer(const std::string& filename);
 void create_cuboid_pcd(const PCDSolidParams& pcd_solid_params);
 void create_plane_pcd(const PCDSolidParams& pcd_solid_params);
 void create_spiked_plane_pcd(const PCDSolidParams& pcd_solid_params);
+void create_inclined_plane_pcd(const PCDSolidParams& pcd_solid_params);
 
 void transform_pcd_and_save(TransformParams& transform_params);
 
