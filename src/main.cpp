@@ -24,7 +24,7 @@ int main(int, char**){
     // --> Creating a stuct of type PCDSolidParams
     // Creating a sample pcd file of a cuboid [default size 10x10x10]
     // PCDSolidParams pcd_solid_params;
-    // pcd_solid_params.pcd_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CUBOID_FILE_NAME;
+    // pcd_solid_params.pcd_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CUBOID_HOLLOW_FILE_NAME;
     // create_cuboid_pcd(pcd_solid_params);
 
     // --> Creating a sample pcd file of a plane [default size 100x100]
@@ -43,29 +43,29 @@ int main(int, char**){
 
 
     // --> Create a sample inclined plane of pcd [default size 100x100]
-    PCDSolidParams pcd_solid_params;
-    pcd_solid_params.length = 100;
-    pcd_solid_params.height = 100;
-    pcd_solid_params.pcd_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_INCLINED_PLANE_FILE_NAME;
-    create_inclined_plane_pcd(pcd_solid_params);
+    // PCDSolidParams pcd_solid_params;
+    // pcd_solid_params.length = 100;
+    // pcd_solid_params.height = 100;
+    // pcd_solid_params.pcd_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_INCLINED_PLANE_FILE_NAME;
+    // create_inclined_plane_pcd(pcd_solid_params);
 
     
 
     // --> Creating a stuct of type TransformParams and passing it to tranform_pcd_and_save to transform pointcloud and save it
     // Transforming the pointcloud and saving it
     // TransformParams transform_params;
-    // transform_params.x_translate = -5.0;
-    // transform_params.y_translate = 0.0;
-    // transform_params.z_translate = -5.0;
-    // transform_params.x_rotation = 0.0; // 0.78 radians ~ 45 degrees
-    // transform_params.input_filename = pcd_solid_params.pcd_filename;
+    // transform_params.x_translate = 0;
+    // transform_params.y_translate = 9.0;
+    // transform_params.z_translate = 0;
+    // // transform_params.x_rotation = 0.0; // 0.78 radians ~ 45 degrees
+    // transform_params.input_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CUBOID_HOLLOW_FILE_NAME;
     // transform_pcd_and_save(transform_params);
 
     // --> Concatenate two pointclouds simple plane and cuboid
     // ConcatenatePCDParams concatenate_two_pcds_params;
-    // concatenate_two_pcds_params.input_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CUBOID_FILE_NAME;
-    // concatenate_two_pcds_params.input_filename_2 = PCD_OBJ_TRANSFER_CONSTANTS::PCD_PLANE_FILE_NAME;
-    // concatenate_two_pcds_params.output_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CONCAT_FILE_NAME;
+    // concatenate_two_pcds_params.input_filename = transform_params.output_filename;
+    // concatenate_two_pcds_params.input_filename_2 = PCD_OBJ_TRANSFER_CONSTANTS::PCD_INCLINED_PLANE_FILE_NAME;
+    // concatenate_two_pcds_params.output_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CONCAT_CUBOID_HOLLOW_WITH_INCLINED_PLANE_FILE_NAME;
     // concatenate_two_pcds(concatenate_two_pcds_params);
 
     // --> Concatenate two pointclouds spiked plane and cuboid
@@ -75,8 +75,15 @@ int main(int, char**){
     // concatenate_two_pcds_params.output_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CONCAT_WITH_SPIKED_PLANE_FILE_NAME;
     // concatenate_two_pcds_spiked_plane_and_cuboid(concatenate_two_pcds_params);
 
+    // --> Experimenting with ICP
+    ConcatenatePCDParams concatenate_two_pcds_params;
+    concatenate_two_pcds_params.input_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CUBOID_HOLLOW_FILE_NAME_TRANSFORMED;
+    concatenate_two_pcds_params.input_filename_2 = PCD_OBJ_TRANSFER_CONSTANTS::PCD_INCLINED_PLANE_FILE_NAME;
+    concatenate_two_pcds_params.output_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_BASIC_ICP_FILE_NAME;
+    basic_icp_registration(concatenate_two_pcds_params);
+
     // Visualizing the pointcloud
-    pcd_visualizer(pcd_solid_params.pcd_filename);
+    pcd_visualizer(concatenate_two_pcds_params.output_filename);
 
 
 

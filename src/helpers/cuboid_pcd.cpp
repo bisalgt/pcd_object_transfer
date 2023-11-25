@@ -18,12 +18,21 @@ void create_cuboid_pcd(const PCDSolidParams& pcd_solid_params)
             for (int k=0;k<pcd_solid_params.height;k++)
             {
                 // std::cout << "i: " << i << " j: " << j << " k: " << k << std::endl;
-                pcl::PointXYZI point;
-                point.x = i;
-                point.y = j;
-                point.z = k;
-                point.intensity = 1;
-                cloud->points.push_back(point);
+                if (i==0 || i==pcd_solid_params.length-1 || j==0 || j==pcd_solid_params.width-1 || k==0 || k==pcd_solid_params.height-1)
+                {
+                    pcl::PointXYZI point;
+                    point.x = i;
+                    point.y = j;
+                    point.z = k;
+                    point.intensity = 1;
+                    cloud->points.push_back(point);
+                }
+                // pcl::PointXYZI point;
+                // point.x = i;
+                // point.y = j;
+                // point.z = k;
+                // point.intensity = 1;
+                // cloud->points.push_back(point);
             }
         }
     }

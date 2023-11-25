@@ -20,6 +20,7 @@ void transform_pcd_and_save(TransformParams& transform_params);
 void concatenate_two_pcds(const ConcatenatePCDParams& concatenate_two_pcds_params);
 void concatenate_two_pcds_spiked_plane_and_cuboid(const ConcatenatePCDParams& concatenate_two_pcds_params);
 
+void basic_icp_registration(const ConcatenatePCDParams& concatenated_pcd_params);
 
 
 #endif // MAIN_H
