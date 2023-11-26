@@ -50,4 +50,9 @@ struct ROIParams {
 };
 
 
+struct ScalePCDParams : FileInputOutputParams {
+    float scaling_factor = 1.0; // all same for x, y or z
+};
+
+
 #endif // USER_DEFINED_PARAMS_H

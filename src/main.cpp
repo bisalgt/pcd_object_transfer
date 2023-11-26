@@ -58,7 +58,7 @@ int main(int, char**){
     // transform_params.y_translate = 9.0;
     // transform_params.z_translate = 0;
     // // transform_params.x_rotation = 0.0; // 0.78 radians ~ 45 degrees
-    // transform_params.input_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CUBOID_HOLLOW_FILE_NAME;
+    // transform_params.input_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_BUNNY_1_FILE_NAME;
     // transform_pcd_and_save(transform_params);
 
     // --> Concatenate two pointclouds simple plane and cuboid
@@ -75,15 +75,25 @@ int main(int, char**){
     // concatenate_two_pcds_params.output_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CONCAT_WITH_SPIKED_PLANE_FILE_NAME;
     // concatenate_two_pcds_spiked_plane_and_cuboid(concatenate_two_pcds_params);
 
+
+    // --> Scaling a pointcloud
+    ScalePCDParams scale_pcd_params;
+    scale_pcd_params.input_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_BUNNY_1_FILE_NAME;
+    scale_pcd_params.output_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_BUNNY_1_TRANSFORMED_FILE_NAME;
+    scale_pcd_params.scaling_factor = 100.0;
+
+    scale_or_multiply_pcd(scale_pcd_params);
+
+
     // --> Experimenting with ICP
-    ConcatenatePCDParams concatenate_two_pcds_params;
-    concatenate_two_pcds_params.input_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_CUBOID_HOLLOW_FILE_NAME_TRANSFORMED;
-    concatenate_two_pcds_params.input_filename_2 = PCD_OBJ_TRANSFER_CONSTANTS::PCD_INCLINED_PLANE_FILE_NAME;
-    concatenate_two_pcds_params.output_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_BASIC_ICP_FILE_NAME;
-    basic_icp_registration(concatenate_two_pcds_params);
+    // ConcatenatePCDParams concatenate_two_pcds_params;
+    // concatenate_two_pcds_params.input_filename = transform_params.output_filename;
+    // concatenate_two_pcds_params.input_filename_2 = PCD_OBJ_TRANSFER_CONSTANTS::PCD_INCLINED_PLANE_FILE_NAME;
+    // concatenate_two_pcds_params.output_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_BASIC_ICP_FILE_NAME;
+    // basic_icp_registration(concatenate_two_pcds_params);
 
     // Visualizing the pointcloud
-    pcd_visualizer(concatenate_two_pcds_params.output_filename);
+    pcd_visualizer(scale_pcd_params.output_filename);
 
 
 

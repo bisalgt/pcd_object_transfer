@@ -22,5 +22,6 @@ void concatenate_two_pcds_spiked_plane_and_cuboid(const ConcatenatePCDParams& co
 
 void basic_icp_registration(const ConcatenatePCDParams& concatenated_pcd_params);
 
+void scale_or_multiply_pcd(const ScalePCDParams& scale_pcd_params);
 
 #endif // MAIN_H

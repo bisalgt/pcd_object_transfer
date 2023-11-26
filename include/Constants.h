@@ -23,6 +23,7 @@ namespace PCD_OBJ_TRANSFER_CONSTANTS {
     const std::string PCD_CUBOID_HOLLOW_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/cuboid_10by10by10_hollow.pcd";
     const std::string PCD_CUBOID_HOLLOW_FILE_NAME_TRANSFORMED = "/Users/bisalgt/Projects/pcd_object_transfer/data/cuboid_10by10by10_hollow_transformed.pcd";
     const std::string PCD_CONCAT_CUBOID_HOLLOW_WITH_INCLINED_PLANE_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/cuboid_10by10by10_hollow_concat_with_inclined_plane.pcd";
+    const std::string PCD_BUNNY_1_TRANSFORMED_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/bun000_transformed.pcd";
 }
 
 
