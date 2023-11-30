@@ -18,10 +18,14 @@ void create_inclined_plane_pcd(const PCDSolidParams& pcd_solid_params);
 void transform_pcd_and_save(TransformParams& transform_params);
 
 void concatenate_two_pcds(const ConcatenatePCDParams& concatenate_two_pcds_params);
-void concatenate_two_pcds_spiked_plane_and_cuboid(const ConcatenatePCDParams& concatenate_two_pcds_params);
+void concatenate_two_pcds_with_y_axis_alignment(const ConcatenatePCDParams& concatenate_two_pcds_params);
 
-void basic_icp_registration(const ConcatenatePCDParams& concatenated_pcd_params);
+void basic_icp_registration(PCDRegistrationParams& pcd_registration_params);
 
 void scale_or_multiply_pcd(const ScalePCDParams& scale_pcd_params);
+
+void sub_sample_pcd(const FileInputOutputParams& file_in_out_params);
+
+void transform_pcd_from_matrix4f(PCDTransformParams& pcd_transform_params);
 
 #endif // MAIN_H

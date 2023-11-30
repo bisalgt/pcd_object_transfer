@@ -3,6 +3,8 @@
 #define USER_DEFINED_PARAMS_H
 
 #include <string>
+#include <Eigen/Core>
+
 
 
 struct Point {
@@ -54,5 +56,20 @@ struct ScalePCDParams : FileInputOutputParams {
     float scaling_factor = 1.0; // all same for x, y or z
 };
 
+
+struct PCDRegistrationParams {
+    std::string source_cloud;
+    std::string target_cloud;
+    std::string output_cloud;
+    Eigen::Matrix4f transformation_matrix;
+
+};
+
+
+struct PCDTransformParams {
+    std::string input_filename;
+    std::string output_filename;
+    Eigen::Matrix4f transformation_matrix;
+};
 
 #endif // USER_DEFINED_PARAMS_H
