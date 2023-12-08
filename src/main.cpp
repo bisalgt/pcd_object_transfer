@@ -7,7 +7,7 @@
 #include "main.h"
 #include "UserDefinedParams.h"
 #include "Constants.h"
-#include "CustomPointTypes.h"
+
 
 
 
@@ -78,22 +78,16 @@ int main(int, char**){
     // std::string label_filename = PCD_OBJ_TRANSFER_CONSTANTS::LABEL_FILENAME_REFERENCE;
     // read_and_write_to_pcd_with_label(bin_filename, label_filename);
 
-    pcl::PointCloud<PointXYZIClsIns>::Ptr cloud_with_label(new pcl::PointCloud<PointXYZIClsIns>);
-    pcl::io::loadPCDFile<PointXYZIClsIns>(PCD_OBJ_TRANSFER_CONSTANTS::PCD_FILENAME_REFERENCE, *cloud_with_label);
+    // Extracting objects from pcd 
 
-    pcl::PointCloud<PointXYZIClsIns>::Ptr person_cloud(new pcl::PointCloud<PointXYZIClsIns>);
+    PCDExtractObjectParams pcd_extract_object_params;
+    pcd_extract_object_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label.pcd";
+    pcd_extract_object_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_cars.pcd";
+    pcd_extract_object_params.class_id = 10;
 
-    for (int i = 0; i < cloud_with_label->points.size(); ++i) {
-        if (cloud_with_label->points[i].class_id == 30 && cloud_with_label->points[i].instance_id == 3){
-            std::cout<<"Aperson"<<std::endl;
-            person_cloud->push_back(cloud_with_label->points[i]);
-        }
-    }
+    extract_object_from_pcd_with_label(pcd_extract_object_params);
 
-    pcl::io::savePCDFileASCII("/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person.pcd", *person_cloud);
-
-
-    pcd_visualizer("/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person.pcd");
+    pcd_visualizer(pcd_extract_object_params.output_filename);
 
 
 

@@ -77,4 +77,10 @@ struct PCDTransformParams {
     Eigen::Matrix4f transformation_matrix;
 };
 
+
+struct PCDExtractObjectParams : FileInputOutputParams {
+    int class_id {-1};
+    int instance_id {-1};
+};
+
 #endif // USER_DEFINED_PARAMS_H

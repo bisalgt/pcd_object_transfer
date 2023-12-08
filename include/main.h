@@ -32,4 +32,6 @@ void read_label_file(std::string filename);
 
 void read_and_write_to_pcd_with_label(std::string bin_filename, std::string label_filename);
 
+void extract_object_from_pcd_with_label(const PCDExtractObjectParams& pcd_extract_object_params);
+
 #endif // MAIN_H
