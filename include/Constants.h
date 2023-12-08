@@ -7,8 +7,8 @@
 
 namespace PCD_OBJ_TRANSFER_CONSTANTS {
 
-    const std::string PCD_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/000000.pcd";
-    const std::string BIN_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/000333.bin";
+    const std::string PCD_000333_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/000333.pcd";
+    const std::string BIN_000333_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/000333.bin";
     const std::string PCD_CUBOID_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/cuboid_10by10by10.pcd";
     const std::string PCD_PLANE_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/plane_100by100.pcd";
     const std::string PCD_CONCAT_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/concatenated_cuboid_and_plane.pcd";
@@ -29,6 +29,11 @@ namespace PCD_OBJ_TRANSFER_CONSTANTS {
     const std::string PCD_BUNNY_1_SCALED_TRANSFORMED_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/bun000_scaled_transformed.pcd";
     const std::string PCD_CONCAT_BUNNY_1_SCALED_TRANSFORMED_WITH_INCLINED_PLANE_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/bun000_scaled_transformed_concat_with_inclined_plane.pcd";
     const std::string PCD_BUNNY_1_SCALED_TRANSFORMED_SUBSAMPLED_FILE_NAME = "/Users/bisalgt/Projects/pcd_object_transfer/data/bun000_scaled_transformed_subsampled.pcd";
+
+    const std::string BIN_FILENAME_REFERENCE = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617.bin";
+    const std::string LABEL_FILENAME_REFERENCE = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617.label";
+    const std::string PCD_FILENAME_REFERENCE = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label.pcd";
+
 }
 
 

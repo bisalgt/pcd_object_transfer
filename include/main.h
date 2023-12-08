@@ -28,4 +28,8 @@ void sub_sample_pcd(const FileInputOutputParams& file_in_out_params);
 
 void transform_pcd_from_matrix4f(PCDTransformParams& pcd_transform_params);
 
+void read_label_file(std::string filename);
+
+void read_and_write_to_pcd_with_label(std::string bin_filename, std::string label_filename);
+
 #endif // MAIN_H

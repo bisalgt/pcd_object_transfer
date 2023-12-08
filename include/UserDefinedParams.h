@@ -11,6 +11,11 @@ struct Point {
     float x, y, z, intensity;
 };
 
+// struct PointWithLabel {
+//     float x, y, z;
+//     uint16_t label;
+// };
+
 struct PCDSolidParams
 {
     int length = 10;
