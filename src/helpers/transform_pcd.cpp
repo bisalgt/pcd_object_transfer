@@ -1,8 +1,10 @@
+#define PCL_NO_PRECOMPILE
 #include <iostream>
 #include <pcl/io/pcd_io.h>
 #include <pcl/common/transforms.h>
 
 #include "UserDefinedParams.h"
+#include "CustomPointTypes.h"
 
 
 void transform_pcd_and_save(TransformParams& transform_params)
@@ -11,8 +13,8 @@ void transform_pcd_and_save(TransformParams& transform_params)
 
     // Loading the pointcloud
     transform_params.output_filename = transform_params.input_filename.substr(0, transform_params.input_filename.size()-4) + "_transformed.pcd";
-    pcl::PointCloud<pcl::PointXYZI>::Ptr source_cloud (new pcl::PointCloud<pcl::PointXYZI>);
-    pcl::io::loadPCDFile<pcl::PointXYZI>(transform_params.input_filename, *source_cloud);
+    pcl::PointCloud<PointXYZIClsIns>::Ptr source_cloud (new pcl::PointCloud<PointXYZIClsIns>);
+    pcl::io::loadPCDFile<PointXYZIClsIns>(transform_params.input_filename, *source_cloud);
 
     // Defining a rotation matrix and translation vector
     Eigen::Affine3f transform = Eigen::Affine3f::Identity();
@@ -25,7 +27,7 @@ void transform_pcd_and_save(TransformParams& transform_params)
     transform.rotate (Eigen::AngleAxisf (transform_params.z_rotation, Eigen::Vector3f::UnitZ())); // Rotate about z axis
     
     // Executing the transformation
-    pcl::PointCloud<pcl::PointXYZI>::Ptr transformed_cloud (new pcl::PointCloud<pcl::PointXYZI> ());
+    pcl::PointCloud<PointXYZIClsIns>::Ptr transformed_cloud (new pcl::PointCloud<PointXYZIClsIns> ());
     pcl::transformPointCloud (*source_cloud, *transformed_cloud, transform);
 
     // Saving transformed cloud

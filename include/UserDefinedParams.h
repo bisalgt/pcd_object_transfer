@@ -84,35 +84,57 @@ struct PCDExtractObjectParams : FileInputOutputParams {
 };
 
 
-// struct SourceCloudParams {
-//     int r{0};
-//     int g{255};
-//     int b{0};
-//     int point_size{1};
-// }
+struct SourceCloudParams {
+    std::string filename;
+    double r{0.0};
+    double g{255.0};
+    double b{0.0};
+    int point_size{1};
+};
 
-// struct TargetCloudParams {
-//     int r{255};
-//     int g{255};
-//     int b{255};
-//     int point_size{1};
-// }
+struct TargetCloudParams {
+    std::string filename;
+    double r{255.0};
+    double g{255.0};
+    double b{255.0};
+    int point_size{1};
+};
 
-// struct SourceTransfCloudParams {
-//     int r{255};
-//     int g{0};
-//     int b{255};
-//     int point_size{1};
-// }
+struct SourceTransfCloudParams {
+    std::string filename;
+    double r{255.0};
+    double g{0.0};
+    double b{255.0};
+    int point_size{1};
+};
 
-// struct PCDVisualizerParams {
-//     std::string source_cloud_filename;
-//     std::string target_cloud_filename;
-//     std::string source_transf_cloud_filename;
-//     SourceCloudParams source_cloud_params;
-//     TargetCloudParams target_cloud_params;
-//     SourceTransfCloudParams source_transf_cloud_params;
+struct PCDVisualizerICPParams {
+    SourceCloudParams source_cloud_params;
+    TargetCloudParams target_cloud_params;
+    SourceTransfCloudParams source_transf_cloud_params;
     
-// }
+};
+
+
+struct ICPParams {
+
+    // Source: PCL Documentation
+
+    // IterativeClosestPoint provides a base implementation of the Iterative Closest Point algorithm.
+
+    // The transformation is estimated based on Singular Value Decomposition (SVD).
+
+    // The algorithm has several termination criteria:
+
+    // Number of iterations has reached the maximum user imposed number of iterations (via setMaximumIterations)
+    // The epsilon (difference) between the previous transformation and the current estimated transformation is smaller than an user imposed value (via setTransformationEpsilon)
+    // The sum of Euclidean squared errors is smaller than a user defined threshold (via setEuclideanFitnessEpsilon)
+
+
+    int max_iterations{1};
+    double transformation_epsilon{1e-6};
+    double euclidean_fitness_epsilon{1e-6};
+    double max_correspondence_distance{0.1}; // 10 cm // Set the maximum correspondence distance threshold (correspondences with higher distances will be ignored)
+};
 
 #endif // USER_DEFINED_PARAMS_H

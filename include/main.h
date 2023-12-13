@@ -35,4 +35,6 @@ void read_and_write_to_pcd_with_label(std::string bin_filename, std::string labe
 
 void extract_object_from_pcd_with_label(const PCDExtractObjectParams& pcd_extract_object_params);
 
+void pcd_visualizer_icp(const PCDVisualizerICPParams& pcd_vis_icp_params);
+
 #endif // MAIN_H

@@ -1,3 +1,5 @@
+
+
 #include <iostream>
 #include <string>
 #include <pcl/io/pcd_io.h>
@@ -5,11 +7,14 @@
 #include <pcl/common/transforms.h>
 #include <cmath>
 #include <vector>
+#include <pcl/visualization/pcl_visualizer.h>
+#include <pcl/visualization/cloud_viewer.h>
 
 #include "main.h"
 #include "UserDefinedParams.h"
 #include "Constants.h"
 #include "CustomPointTypes.h"
+
 
 
 
@@ -36,32 +41,32 @@ int main(int, char**){
 
     // --> Subsampling a pointcloud
     // goal is to extract the base and perform icp
-    FileInputOutputParams file_in_out_params;
-    file_in_out_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd";
-    file_in_out_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed_subsampled.pcd";
-    std::vector<float> z_values_references = sub_sample_pcd(file_in_out_params);
+    // FileInputOutputParams file_in_out_params;
+    // file_in_out_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd";
+    // file_in_out_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed_subsampled.pcd";
+    // std::vector<float> z_values_references = sub_sample_pcd(file_in_out_params);
 
-    // --> Experimenting with ICP
-    PCDRegistrationParams pcd_registration_params;
-    pcd_registration_params.source_cloud = file_in_out_params.output_filename;
-    pcd_registration_params.target_cloud = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd";
-    pcd_registration_params.output_cloud = "/Users/bisalgt/Projects/pcd_object_transfer/data/basic_icp_registration.pcd";
-    basic_icp_registration(pcd_registration_params);
+    // // --> Experimenting with ICP
+    // PCDRegistrationParams pcd_registration_params;
+    // pcd_registration_params.source_cloud = file_in_out_params.output_filename;
+    // pcd_registration_params.target_cloud = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd";
+    // pcd_registration_params.output_cloud = "/Users/bisalgt/Projects/pcd_object_transfer/data/basic_icp_registration.pcd";
+    // basic_icp_registration(pcd_registration_params);
 
-    // --> Transforming a pointcloud
-    PCDTransformParams pcd_transform_params;
-    pcd_transform_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd";
-    pcd_transform_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered.pcd";
-    pcd_registration_params.transformation_matrix(2,3) = pcd_registration_params.transformation_matrix(2,3) + z_values_references[0]; // index 0 is threshold, index 2 is lower limit z
-    pcd_transform_params.transformation_matrix = pcd_registration_params.transformation_matrix;
-    transform_pcd_from_matrix4f(pcd_transform_params);
+    // // --> Transforming a pointcloud
+    // PCDTransformParams pcd_transform_params;
+    // pcd_transform_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd";
+    // pcd_transform_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered.pcd";
+    // pcd_registration_params.transformation_matrix(2,3) = pcd_registration_params.transformation_matrix(2,3) + z_values_references[0]; // index 0 is threshold, index 2 is lower limit z
+    // pcd_transform_params.transformation_matrix = pcd_registration_params.transformation_matrix;
+    // transform_pcd_from_matrix4f(pcd_transform_params);
 
-    // --> Concatenating 
-    ConcatenatePCDParams concatenate_two_pcds_params;
-    concatenate_two_pcds_params.input_filename = pcd_transform_params.output_filename;
-    concatenate_two_pcds_params.input_filename_2 = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd";
-    concatenate_two_pcds_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered_with_road.pcd";
-    concatenate_two_pcds(concatenate_two_pcds_params);
+    // // --> Concatenating 
+    // ConcatenatePCDParams concatenate_two_pcds_params;
+    // concatenate_two_pcds_params.input_filename = pcd_transform_params.output_filename;
+    // concatenate_two_pcds_params.input_filename_2 = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd";
+    // concatenate_two_pcds_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered_with_road.pcd";
+    // concatenate_two_pcds(concatenate_two_pcds_params);
     
 
     // std::string pcd_target_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_000333_FILE_NAME;
@@ -111,17 +116,20 @@ int main(int, char**){
 
     // TransformParams transform_params;
     // transform_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person.pcd";
-    // // transform_params.x_translate = -centroid[0];
-    // // transform_params.y_translate = -centroid[1];
-    // // transform_params.z_translate = -centroid[2];
+    // // // transform_params.x_translate = -centroid[0];
+    // // // transform_params.y_translate = -centroid[1];
+    // // // transform_params.z_translate = -centroid[2];
     // transform_params.x_translate = 6.0;
     // transform_params.y_translate = 6.0;
     // transform_params.z_translate = 0.5;
-    // // transform_params.x_rotation = 90.0  * (M_PI/180.0);
-    // // transform_params.y_rotation = 90.0  * (M_PI/180.0); // degrees in radians
-    // // transform_params.z_rotation = 90.0  * (M_PI/180.0); // degrees in radians
-    // transform_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd";
+    // // // // transform_params.x_rotation = 90.0  * (M_PI/180.0);
+    // // // // transform_params.y_rotation = 90.0  * (M_PI/180.0); // degrees in radians
+    // // // // transform_params.z_rotation = 90.0  * (M_PI/180.0); // degrees in radians
+    // // transform_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd";
+    
     // transform_pcd_and_save(transform_params);
+
+    // pcd_visualizer(transform_params.output_filename);
 
 
     // Concate with target cloud == road
@@ -133,9 +141,62 @@ int main(int, char**){
     // concatenate_two_pcds(concatenate_two_pcds_params);
 
 
+    PCDRegistrationParams pcd_registration_params{
+        .source_cloud {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd"},
+        .target_cloud {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd"},
+        .output_cloud {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered_with_road.pcd"},
+    };
+
+    basic_icp_registration(pcd_registration_params);
+
+    // // // Visualize
+
+    PCDVisualizerICPParams pcd_visalize_icp_params {
+        .source_cloud_params {
+            .filename {pcd_registration_params.source_cloud},
+        },
+        .target_cloud_params {
+            .filename {pcd_registration_params.target_cloud},
+        },
+        .source_transf_cloud_params {
+            .filename {pcd_registration_params.output_cloud},
+        },
+    };
 
 
-    pcd_visualizer(concatenate_two_pcds_params.output_filename);
+    pcd_visualizer_icp(pcd_visalize_icp_params);
+
+
+    
+
+    // SourceCloudParams source_cloud_params {
+    //     .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person.pcd"},
+    //     .r {255},
+    //     .g {0},
+    //     .b {0},
+    //     .point_size {1},
+    // };
+
+    // // Add the source cloud
+    // pcl::PointCloud<PointXYZIClsIns>::Ptr source_cloud(new pcl::PointCloud<PointXYZIClsIns>);
+    // pcl::io::loadPCDFile<PointXYZIClsIns>(source_cloud_params.filename, *source_cloud);
+    // // pcl::visualization::PointCloudColorHandlerCustom<PointXYZIClsIns> source_cloud_color (source_cloud, source_cloud_params.r, source_cloud_params.g, source_cloud_params.b);
+    // // viewer->addPointCloud<PointXYZIClsIns>(source_cloud, source_cloud_color, "source cloud");
+
+    // boost::shared_ptr< pcl::visualization::PCLVisualizer > viewer ( new pcl::visualization::PCLVisualizer ("3D Viewer") );
+    // viewer->setBackgroundColor(0.0, 0.0, 0.0);
+    // viewer->addPointCloud<PointXYZIClsIns>(source_cloud, "source cloud");
+    // // viewer->showCloud(source_cloud, "source cloud");
+
+
+    // viewer->addCoordinateSystem(1.0);
+
+    // viewer->initCameraParameters();
+    
+    // viewer->spin();
+
+
+    // pcd_visualizer(concatenate_two_pcds_params.output_filename);
 
 
 
