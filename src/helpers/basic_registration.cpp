@@ -28,7 +28,7 @@ void basic_icp_registration(PCDRegistrationParams& pcd_reistration_params)
 
     pcd_reistration_params.transformation_matrix = icp.getFinalTransformation();
 
-    // pcl::io::savePCDFileASCII(pcd_reistration_params.output_filename, aligned_cloud);
+    pcl::io::savePCDFileASCII(pcd_reistration_params.output_cloud, aligned_cloud);
     // Concatenate the aligned cloud and the target cloud
     // pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_merged (new pcl::PointCloud<pcl::PointXYZI>);
     // *cloud_merged = aligned_cloud + *cloud_target;

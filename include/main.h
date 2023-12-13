@@ -3,6 +3,7 @@
 #define MAIN_H
 
 #include <string>
+#include <vector>
 #include "UserDefinedParams.h"
 
 void printsth();
@@ -24,7 +25,7 @@ void basic_icp_registration(PCDRegistrationParams& pcd_registration_params);
 
 void scale_or_multiply_pcd(const ScalePCDParams& scale_pcd_params);
 
-void sub_sample_pcd(const FileInputOutputParams& file_in_out_params);
+std::vector<float> sub_sample_pcd(const FileInputOutputParams& file_in_out_params);
 
 void transform_pcd_from_matrix4f(PCDTransformParams& pcd_transform_params);
 

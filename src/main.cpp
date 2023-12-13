@@ -3,10 +3,13 @@
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include <pcl/common/transforms.h>
+#include <cmath>
+#include <vector>
 
 #include "main.h"
 #include "UserDefinedParams.h"
 #include "Constants.h"
+#include "CustomPointTypes.h"
 
 
 
@@ -33,31 +36,32 @@ int main(int, char**){
 
     // --> Subsampling a pointcloud
     // goal is to extract the base and perform icp
-    // FileInputOutputParams file_in_out_params;
-    // file_in_out_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/bun000_scaled_transformed_transformed.pcd";
-    // file_in_out_params.output_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_BUNNY_1_SCALED_TRANSFORMED_SUBSAMPLED_FILE_NAME;
-    // sub_sample_pcd(file_in_out_params);
+    FileInputOutputParams file_in_out_params;
+    file_in_out_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd";
+    file_in_out_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed_subsampled.pcd";
+    std::vector<float> z_values_references = sub_sample_pcd(file_in_out_params);
 
     // --> Experimenting with ICP
-    // PCDRegistrationParams pcd_registration_params;
-    // pcd_registration_params.source_cloud = PCD_OBJ_TRANSFER_CONSTANTS::PCD_BUNNY_1_SCALED_TRANSFORMED_SUBSAMPLED_FILE_NAME;
-    // pcd_registration_params.target_cloud = PCD_OBJ_TRANSFER_CONSTANTS::PCD_INCLINED_PLANE_FILE_NAME;
-    // pcd_registration_params.output_cloud = PCD_OBJ_TRANSFER_CONSTANTS::PCD_BASIC_ICP_FILE_NAME;
-    // basic_icp_registration(pcd_registration_params);
+    PCDRegistrationParams pcd_registration_params;
+    pcd_registration_params.source_cloud = file_in_out_params.output_filename;
+    pcd_registration_params.target_cloud = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd";
+    pcd_registration_params.output_cloud = "/Users/bisalgt/Projects/pcd_object_transfer/data/basic_icp_registration.pcd";
+    basic_icp_registration(pcd_registration_params);
 
     // --> Transforming a pointcloud
-    // PCDTransformParams pcd_transform_params;
-    // pcd_transform_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/bun000_scaled_transformed_transformed.pcd";
-    // pcd_transform_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/bun000_scaled_final_transformed.pcd";
-    // pcd_transform_params.transformation_matrix = pcd_registration_params.transformation_matrix;
-    // transform_pcd_from_matrix4f(pcd_transform_params);
+    PCDTransformParams pcd_transform_params;
+    pcd_transform_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd";
+    pcd_transform_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered.pcd";
+    pcd_registration_params.transformation_matrix(2,3) = pcd_registration_params.transformation_matrix(2,3) + z_values_references[0]; // index 0 is threshold, index 2 is lower limit z
+    pcd_transform_params.transformation_matrix = pcd_registration_params.transformation_matrix;
+    transform_pcd_from_matrix4f(pcd_transform_params);
 
-    // --> Concatenating transformed bunny with inclined plane
-    // ConcatenatePCDParams concatenate_two_pcds_params;
-    // concatenate_two_pcds_params.input_filename = pcd_transform_params.output_filename;
-    // concatenate_two_pcds_params.input_filename_2 = PCD_OBJ_TRANSFER_CONSTANTS::PCD_INCLINED_PLANE_FILE_NAME;
-    // concatenate_two_pcds_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/bun000_scaled_final_transformed_concat_with_inclined_plane.pcd";
-    // concatenate_two_pcds(concatenate_two_pcds_params);
+    // --> Concatenating 
+    ConcatenatePCDParams concatenate_two_pcds_params;
+    concatenate_two_pcds_params.input_filename = pcd_transform_params.output_filename;
+    concatenate_two_pcds_params.input_filename_2 = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd";
+    concatenate_two_pcds_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered_with_road.pcd";
+    concatenate_two_pcds(concatenate_two_pcds_params);
     
 
     // std::string pcd_target_filename = PCD_OBJ_TRANSFER_CONSTANTS::PCD_000333_FILE_NAME;
@@ -80,14 +84,58 @@ int main(int, char**){
 
     // Extracting objects from pcd 
 
-    PCDExtractObjectParams pcd_extract_object_params;
-    pcd_extract_object_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label.pcd";
-    pcd_extract_object_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_cars.pcd";
-    pcd_extract_object_params.class_id = 10;
+    // PCDExtractObjectParams pcd_extract_object_params;
+    // pcd_extract_object_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label.pcd";
+    // pcd_extract_object_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_cars.pcd";
+    // pcd_extract_object_params.class_id = 10;
 
-    extract_object_from_pcd_with_label(pcd_extract_object_params);
+    // extract_object_from_pcd_with_label(pcd_extract_object_params);
 
-    pcd_visualizer(pcd_extract_object_params.output_filename);
+
+    // Concatenate two pcds
+    // ConcatenatePCDParams concatenate_two_pcds_params;
+    // concatenate_two_pcds_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd";
+    // concatenate_two_pcds_params.input_filename_2 = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person.pcd";
+    // concatenate_two_pcds_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road_person.pcd";
+    // concatenate_two_pcds(concatenate_two_pcds_params);
+
+    // Translate to origin and Rotate
+    // Eigen::Vector4f centroid;
+    // pcl::PointCloud<PointXYZIClsIns>::Ptr cloud (new pcl::PointCloud<PointXYZIClsIns>);
+    // pcl::io::loadPCDFile<PointXYZIClsIns>("/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person.pcd", *cloud);
+    // pcl::compute3DCentroid(*cloud, centroid);
+
+    
+
+    // Transform source cloud
+
+    // TransformParams transform_params;
+    // transform_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person.pcd";
+    // // transform_params.x_translate = -centroid[0];
+    // // transform_params.y_translate = -centroid[1];
+    // // transform_params.z_translate = -centroid[2];
+    // transform_params.x_translate = 6.0;
+    // transform_params.y_translate = 6.0;
+    // transform_params.z_translate = 0.5;
+    // // transform_params.x_rotation = 90.0  * (M_PI/180.0);
+    // // transform_params.y_rotation = 90.0  * (M_PI/180.0); // degrees in radians
+    // // transform_params.z_rotation = 90.0  * (M_PI/180.0); // degrees in radians
+    // transform_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd";
+    // transform_pcd_and_save(transform_params);
+
+
+    // Concate with target cloud == road
+
+    // ConcatenatePCDParams concatenate_two_pcds_params;
+    // concatenate_two_pcds_params.input_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd";
+    // concatenate_two_pcds_params.input_filename_2 = transform_params.output_filename;
+    // concatenate_two_pcds_params.output_filename = "/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road_person_transformed.pcd";
+    // concatenate_two_pcds(concatenate_two_pcds_params);
+
+
+
+
+    pcd_visualizer(concatenate_two_pcds_params.output_filename);
 
 
 

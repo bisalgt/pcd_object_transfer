@@ -83,4 +83,36 @@ struct PCDExtractObjectParams : FileInputOutputParams {
     int instance_id {-1};
 };
 
+
+// struct SourceCloudParams {
+//     int r{0};
+//     int g{255};
+//     int b{0};
+//     int point_size{1};
+// }
+
+// struct TargetCloudParams {
+//     int r{255};
+//     int g{255};
+//     int b{255};
+//     int point_size{1};
+// }
+
+// struct SourceTransfCloudParams {
+//     int r{255};
+//     int g{0};
+//     int b{255};
+//     int point_size{1};
+// }
+
+// struct PCDVisualizerParams {
+//     std::string source_cloud_filename;
+//     std::string target_cloud_filename;
+//     std::string source_transf_cloud_filename;
+//     SourceCloudParams source_cloud_params;
+//     TargetCloudParams target_cloud_params;
+//     SourceTransfCloudParams source_transf_cloud_params;
+    
+// }
+
 #endif // USER_DEFINED_PARAMS_H
