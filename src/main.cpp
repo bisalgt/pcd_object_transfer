@@ -141,30 +141,35 @@ int main(int, char**){
     // concatenate_two_pcds(concatenate_two_pcds_params);
 
 
-    PCDRegistrationParams pcd_registration_params{
-        .source_cloud {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd"},
-        .target_cloud {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd"},
-        .output_cloud {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered_with_road.pcd"},
-    };
+    // Using ICP and visualizer------------
 
-    basic_icp_registration(pcd_registration_params);
+    // PCDRegistrationParams pcd_registration_params{
+    //     .source_cloud {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person_transformed.pcd"},
+    //     .target_cloud {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd"},
+    //     .output_cloud {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered_with_road.pcd"},
+    // };
 
-    // // // Visualize
+    // basic_icp_registration(pcd_registration_params);
+
+    // // // // Visualize
 
     PCDVisualizerICPParams pcd_visalize_icp_params {
         .source_cloud_params {
-            .filename {pcd_registration_params.source_cloud},
+            .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered_with_road.pcd"},
         },
         .target_cloud_params {
-            .filename {pcd_registration_params.target_cloud},
+            .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd"},
         },
         .source_transf_cloud_params {
-            .filename {pcd_registration_params.output_cloud},
+            .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/icp_iterative_reg_output.pcd"},
         },
     };
 
 
-    pcd_visualizer_icp(pcd_visalize_icp_params);
+    // pcd_visualizer_icp(pcd_visalize_icp_params);
+
+
+    icp_registration_with_iterative_view(pcd_visalize_icp_params);
 
 
     

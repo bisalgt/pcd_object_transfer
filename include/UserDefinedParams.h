@@ -112,6 +112,7 @@ struct PCDVisualizerICPParams {
     SourceCloudParams source_cloud_params;
     TargetCloudParams target_cloud_params;
     SourceTransfCloudParams source_transf_cloud_params;
+    Eigen::Matrix4f transformation_matrix;
     
 };
 
