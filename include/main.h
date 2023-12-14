@@ -39,5 +39,7 @@ void pcd_visualizer_icp(const PCDVisualizerICPParams& pcd_vis_icp_params);
 
 void icp_registration_with_iterative_view(PCDVisualizerICPParams& pcd_vis_icp_params);
 
+void icp_registration_with_normal_iterative_view(PCDVisualizerICPParams& pcd_vis_icp_params);
+
 
 #endif // MAIN_H

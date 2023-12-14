@@ -1,14 +1,19 @@
-
+#define PCL_NO_PRECOMPILE
 
 #include <iostream>
 #include <string>
-#include <pcl/io/pcd_io.h>
-#include <pcl/point_types.h>
-#include <pcl/common/transforms.h>
 #include <cmath>
 #include <vector>
+
+
+#include <pcl/io/pcd_io.h>
+#include <pcl/point_types.h>
+// #include <pcl/common/transforms.h>
+#include <pcl/common/io.h>
+// #include <pcl/registration/icp.h>
+#include <pcl/features/normal_3d.h>
 #include <pcl/visualization/pcl_visualizer.h>
-#include <pcl/visualization/cloud_viewer.h>
+
 
 #include "main.h"
 #include "UserDefinedParams.h"
@@ -153,23 +158,24 @@ int main(int, char**){
 
     // // // // Visualize
 
-    PCDVisualizerICPParams pcd_visalize_icp_params {
-        .source_cloud_params {
-            .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered_with_road.pcd"},
-        },
-        .target_cloud_params {
-            .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd"},
-        },
-        .source_transf_cloud_params {
-            .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/icp_iterative_reg_output.pcd"},
-        },
-    };
+    // PCDVisualizerICPParams pcd_visalize_icp_params {
+    //     .source_cloud_params {
+    //         .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_person_registered_with_road.pcd"},
+    //     },
+    //     .target_cloud_params {
+    //         .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_road.pcd"},
+    //     },
+    //     .source_transf_cloud_params {
+    //         .filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/icp_iterative_reg_output.pcd"},
+    //     },
+    // };
 
 
     // pcd_visualizer_icp(pcd_visalize_icp_params);
 
 
-    icp_registration_with_iterative_view(pcd_visalize_icp_params);
+    // icp_registration_with_iterative_view(pcd_visalize_icp_params);
+    // icp_registration_with_normal_iterative_view(pcd_visalize_icp_params);
 
 
     
@@ -205,6 +211,67 @@ int main(int, char**){
 
 
 
+
+    // Read a point cloud as a custom point type
+    // add normal to the point type
+    // visualize the point cloud with normals
+
+    // std::string filename {"/Users/bisalgt/Projects/pcd_object_transfer/data/002617_with_label_filtered_person.pcd"};
+
+    // pcl::PointCloud<PointXYZINormClsIns>::Ptr cloud_source (new pcl::PointCloud<PointXYZINormClsIns>);
     
+    // pcl::io::loadPCDFile<PointXYZINormClsIns>(filename, *cloud_source);
+
+
+    // pcl::visualization::PCLVisualizer::Ptr viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
+    // viewer->setBackgroundColor(0.0, 0.0, 0.0);
+
+    
+    // add normals
+
+    // std::cout<<"Normals calculation started\n"<<std::endl;
+
+    // pcl::NormalEstimation<PointXYZINormClsIns, pcl::Normal> normalEstimator;
+    // normalEstimator.setInputCloud ( cloud_source );
+    // pcl::search::KdTree<PointXYZINormClsIns>::Ptr searchTree (new pcl::search::KdTree<PointXYZINormClsIns> ());
+    // normalEstimator.setSearchMethod ( searchTree );
+    // normalEstimator.setKSearch ( 15 );
+
+    // pcl::PointCloud<pcl::Normal>::Ptr normals (new pcl::PointCloud<pcl::Normal>);
+    // normalEstimator.compute ( *normals );
+
+    // std::cout<<"Normals calculation finished\n"<<std::endl;
+    // std::cout<<"Normals size: "<<normals->size()<<std::endl;
+    // std::cout<<"Cloud size: "<<cloud_source->size()<<std::endl;
+
+
+
+    // pcl::PointCloud<PointXYZINormClsIns>::Ptr cloud_with_normals (new pcl::PointCloud<PointXYZINormClsIns>);
+
+    // pcl::concatenateFields( *cloud_source, *normals, *cloud_with_normals );
+
+
+
+    // pcl::io::savePCDFileASCII ("/Users/bisalgt/Projects/pcd_object_transfer/data/test_pointxyzicinormals_.pcd", *cloud_with_normals);
+
+    pcl::visualization::PCLVisualizer::Ptr viewer (new pcl::visualization::PCLVisualizer ("3D Viewer"));
+    viewer->setBackgroundColor(0.0, 0.0, 0.0);
+
+    std::string filename{"/Users/bisalgt/Projects/pcd_object_transfer/data/test_pointxyzicinormals_.pcd"};
+    pcl::PointCloud<PointXYZINormClsIns>::Ptr cloud_source (new pcl::PointCloud<PointXYZINormClsIns>);
+    pcl::io::loadPCDFile<PointXYZINormClsIns>(filename, *cloud_source);
+    pcl::visualization::PointCloudColorHandlerCustom<PointXYZINormClsIns> source_cloud_color (cloud_source, 255, 0, 0);
+    viewer->addPointCloud<PointXYZINormClsIns>(cloud_source, source_cloud_color, "cloud with normals");
+    viewer->addCoordinateSystem(1.0);
+    viewer->initCameraParameters();
+    viewer->spin();
+
+    // viewer->addPointCloud<PointXYZINormClsIns>(cloud_with_normals, "cloud with normals");
+
+    // viewer->addCoordinateSystem(1.0);
+
+    // viewer->initCameraParameters();
+
+    // viewer->spin();
     
 }
